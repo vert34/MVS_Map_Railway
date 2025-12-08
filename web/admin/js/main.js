@@ -4541,6 +4541,14 @@ async function processNodeHierarchically(node, parent, existingObjects, processe
                 };
             }
 
+            // Preserve twObjectIx and wClass from JSON node to the group
+            if (node.wClass !== undefined) {
+                group.userData.wClass = node.wClass;
+            }
+            if (node.twObjectIx !== undefined) {
+                group.userData.twObjectIx = node.twObjectIx;
+            }
+
             // Mark as imported from JSON
             group.userData.isImportedFromJSON = true;
 
@@ -4552,6 +4560,19 @@ async function processNodeHierarchically(node, parent, existingObjects, processe
             group.userData.isImportedFromJSON = true;
             // Mark as imported from JSON to skip canvas clamping
             group.name = obj.name || "Attached " + Date.now();
+
+            // Preserve twObjectIx and wClass from parent object (or JSON node) to the group
+            // First try from the object's userData (set during updateOrCreateObject)
+            if (obj.userData?.twObjectIx !== undefined) {
+                group.userData.twObjectIx = obj.userData.twObjectIx;
+            } else if (node.twObjectIx !== undefined) {
+                group.userData.twObjectIx = node.twObjectIx;
+            }
+            if (obj.userData?.wClass !== undefined) {
+                group.userData.wClass = obj.userData.wClass;
+            } else if (node.wClass !== undefined) {
+                group.userData.wClass = node.wClass;
+            }
 
             // Use local transform values directly from JSON
             if (node.pTransform) {
