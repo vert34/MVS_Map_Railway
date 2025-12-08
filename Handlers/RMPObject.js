@@ -93,6 +93,16 @@ class HndlrRMPObject extends MVHANDLER
                }
             },
 
+            'RMPObject:parent': {
+               SqlData: {
+                  sProc: 'set_RMPObject_Parent',
+                  aData: [ 'twRMPObjectIx',
+                           'wClass', 'twObjectIx' 
+                  ],
+                  Param: 1
+               }
+            },
+
             'RMPObject:transform': {
                SqlData: {
                   sProc: 'set_RMPObject_Transform',
